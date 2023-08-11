@@ -1,0 +1,22 @@
+{% extends 'food/base.html' %}
+
+{% block body %}
+<div class="card mt-4 me-4 ms-4 mb-4">
+  <div class="card-header text-center" id="top">
+    Scroll down for more info.
+  </div>
+      <img src="{{ item.image }}" class="card-img-top details-img" alt="...">
+      <div class="card-body">
+        <h1 class="card-title text-decoration-underline">{{ item.name }}</h1>
+        <h2 class="card-subtitle mb-3">Only for ${{ item.price }}</h2>
+        <a name="" id="" class="btn btn-dark me-2" href="#" role="button">Add to cart</a>
+        <a name="" id="" class="btn btn-warning me-2" href="#" role="button">Order now</a>
+        <a name="" id="" class="btn btn-info me-2" href="{% url 'food:items' %}" role="button">Go back to items</a>
+        <p class="card-text mt-3 mb-3"><b>Description:</b><br>{{ item.description }}</p>
+        <a name="" id="" class="btn btn-danger me-2" href="#top" role="button">Go back to top</a>
+      </div>
+      <div class="card-footer">
+        Added by aashif
+      </div>
+</div>
+{% endblock %}
