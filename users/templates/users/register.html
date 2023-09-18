@@ -1,0 +1,52 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block body %}
+<div class="card mb-12">
+  <div class="row g-0">
+    <div class="col-md-6">
+      <img src="{% static 'images/registration.png' %}" class="img-fluid rounded-start" alt="...">
+    </div>
+    <div class="col-md-6">
+      <div class="card-body">
+        <h5 class="card-title">Sign Up!</h5>
+        <form class="row g-3 mt-2" action="{% url 'register' %}" method="post">
+          {% csrf_token %}
+          <!-- <div class="col-auto">
+            <label for="inputFirstName" class="form-label">First Name</label>
+            <input type="text" class="form-control" aria-label="First name" id="inputFirstName" name="firstName" required>
+          </div>
+          <div class="col-auto">
+            <label for="inputLastName" class="form-label">Last Name</label>
+            <input type="text" class="form-control" aria-label="Last name" id="inputLastName" name="lastName"  required>
+          </div> -->
+          <div class="col-auto">
+            <label for="inputEmail4" class="form-label">Email</label>
+            <input type="email" class="form-control" id="inputEmail4" name="email" required>
+          </div>
+          <div class="col-auto">
+            <label class="form-label" for="username">Username</label>
+            <div class="input-group">
+              <div class="input-group-text">@</div>
+              <input type="text" class="form-control" name="username" id="username" required placeholder="Username">
+            </div>
+          </div>
+          <div class="col-auto">
+            <label for="inputPassword4" class="form-label">Password</label>
+            <input type="password" class="form-control" name="password" id="inputPassword4" required>
+          </div>
+          <!-- <div class="col-md-4">
+              <label for="inputState" class="form-label">State</label>
+              <select id="inputState" class="form-select">
+                <option selected>Choose...</option>
+                <option>...</option>
+              </select>
+            </div> -->
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -19,32 +19,49 @@
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
       <a class="navbar-brand" href="{% url 'food:items' %}">
-        <img src="{% static 'images/logo.png' %}" alt="brand-logo" width="30"
-          height="30" class="d-inline-block align-text-top"> FoodApp
+        <img src="{% static 'images/logo.png' %}" alt="brand-logo" width="30" height="30"
+          class="d-inline-block align-text-top"> FoodApp
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link link-underline-primary" href="#">Add Item</a>
+            <a class="nav-link link-underline-primary" href="{% url 'food:add' %}">Add Item</a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link link-underline-primary" href="#">Update Item</a>
-          </li>
+          </li> -->
           <li class="nav-item">
             <a class="nav-link link-underline-primary" href="#">Delete Item</a>
           </li>
           <li class="nav-item">
             <a class="nav-link link-underline-primary" href="#">View Item</a>
           </li>
+          <li class="nav-item">
+            {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link link-underline-primary" href="{% url 'profile' %}">Profile</a>
+          </li>
+          <a class="nav-link link-underline-primary" href="{% url 'logout' %}">Logout</a>
+          {% else %}
+          <a class="nav-link link-underline-primary" href="{% url 'login' %}">Login</a>
+          {% endif %}
+          </li>
         </ul>
       </div>
     </div>
   </nav>
-
+  {% if messages %}
+  {% for message in messages %}
+  <div class=" alert alert-{{ message.tags }}" role="alert">
+    {{ message }}
+  </div>
+  {% endfor %}
+  {% endif %}
   {% block body %}
   {% endblock %}
 </body>

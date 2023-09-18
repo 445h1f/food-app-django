@@ -11,7 +11,6 @@
       <h5 class="card-title text-decoration-underline">{{ item.name }}</h5>
       <h6 class="card-subtitle mb-2 text-body-secondary">${{ item.price }}</h6>
     <a href="{% url 'food:details' item.id %}" class="btn btn-success card-link">Details</a>
-    <a href="#" class="btn btn-primary card-link">Buy Now</a>
     </div>
   </div>
   {% endfor %}

@@ -7,12 +7,28 @@
   </div>
       <img src="{{ item.image }}" class="card-img-top details-img" alt="...">
       <div class="card-body">
-        <h1 class="card-title text-decoration-underline">{{ item.name }}</h1>
-        <h2 class="card-subtitle mb-3">Only for ${{ item.price }}</h2>
-        <a name="" id="" class="btn btn-dark me-2" href="#" role="button">Add to cart</a>
-        <a name="" id="" class="btn btn-warning me-2" href="#" role="button">Order now</a>
-        <a name="" id="" class="btn btn-info me-2" href="{% url 'food:items' %}" role="button">Go back to items</a>
-        <p class="card-text mt-3 mb-3"><b>Description:</b><br>{{ item.description }}</p>
+        <div class="card">
+          <div class="card-header">
+            <h1 class="card-title text-decoration-underline">{{item.name}}</h1>
+            <div class="card-body ps-0">
+              <h2 class="card-subtitle">${{ item.price }}</h2>
+            </div>
+            <a name="" id="" class="btn btn-dark me-2" href="#" role="button">Add to cart</a>
+            <a name="" id="" class="btn btn-warning me-2" href="#" role="button">Order now</a>
+            <a name="" id="" class="btn btn-info me-2" href="{% url 'food:items' %}" role="button">Go back to items</a>
+            <a name="" id="" class="btn btn-warning me-2" href="{% url 'food:update' item.id %}" role="button">Update</a>
+            <a name="" id="" class="btn btn-danger me-2" href="{% url 'food:delete' item.id %}" role="button">Delete</a>
+          </div>
+        </div>
+        <!-- <h1 class="card-title text-decoration-underline">{{ item.name }}</h1>
+        <h2 class="card-subtitle mb-3">Only for ${{ item.price }}</h2> -->
+        <div class="card text-bg-secondary mt-2 mb-2">
+          <div class="card-header">Description</div>
+          <div class="card-body">
+            <p class="card-text">{{ item.description }}
+            </p>
+          </div>
+        </div>
         <a name="" id="" class="btn btn-danger me-2" href="#top" role="button">Go back to top</a>
       </div>
       <div class="card-footer">

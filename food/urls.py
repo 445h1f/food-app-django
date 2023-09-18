@@ -20,7 +20,12 @@ from django.urls import path
 app_name = 'food'
 
 urlpatterns = [
-    path('hello/', views.index, name="index"),
     path('items/', views.item, name="items"),
     path('items/detail/<int:itemId>', views.details, name="details"),
+    path('items/update/<int:itemId>', views.updateItem, name="update"),
+    path('items/add', views.addItem, name='add'),
+    path('items/delete/<int:itemId>', views.deleteItem, name='delete'),
+    path('items/add2/', views.add2, name='add2'),
+    path('items/update2/<int:itemId>', views.update2, name='update2'),
+    path('items/delete2/<int:itemId>', views.delete, name='delete2'),
 ]
