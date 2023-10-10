@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from .models import Item
 from django.contrib.auth.decorators import login_required
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from django.template import loader
 from .forms import ItemForm
 
@@ -53,6 +54,12 @@ def details(request, itemId):
         return render(request, 'food/details.html', context)
     except:
         return render(request, 'food/404.html')
+
+
+class FoodDetail(DetailView):
+    model = Item  # data model
+    template_name = 'food/details.html'  # template
+    context_object_name = 'item'
 
 
 @login_required
