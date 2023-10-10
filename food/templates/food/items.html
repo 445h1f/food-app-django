@@ -4,16 +4,19 @@
 <!-- <h1>Click item name to view it's details!</h1> -->
 <div class="container mt-3">
   <div class="row row-cols-auto">
-  {% for item in itemList %}
-  <div class="card ms-5 mb-5" style="width: 20rem;">
-    <img src="{{ item.image }}" class="card-img-top mt-2" alt="{{ item.name }}-image">
-    <div class="card-body">
-      <h5 class="card-title text-decoration-underline">{{ item.name }}</h5>
-      <h6 class="card-subtitle mb-2 text-body-secondary">${{ item.price }}</h6>
-    <a href="{% url 'food:details' item.id %}" class="btn btn-success card-link">Details</a>
+    {% for item in itemList %}
+    <div class="card ms-5 mb-5" style="width: 20rem;">
+      <img src="{{ item.image }}" class="card-img-top mt-2" alt="{{ item.name }}-image">
+      <div class="card-body">
+        <h5 class="card-title text-decoration-underline">{{ item.name }}</h5>
+        <h6 class="card-subtitle mb-2 text-body-secondary">${{ item.price }}</h6>
+        <a href="{% url 'food:details' item.id %}" class="btn btn-success card-link">Details</a>
+      </div>
+      <div class="card-footer">
+        By {{ item.user }}
+      </div>
     </div>
-  </div>
-  {% endfor %}
+    {% endfor %}
   </div>
 </div>
 {% endblock %}

@@ -1,3 +1,4 @@
+from django.forms.models import BaseModelForm
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_protect
@@ -6,6 +7,7 @@ from .models import Item
 from django.contrib.auth.decorators import login_required
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
 from django.template import loader
 from .forms import ItemForm
 
@@ -43,17 +45,17 @@ class IndexClassView(ListView):
     context_object_name = 'itemList'  # context name for list of items
 
 
-@login_required
-def details(request, itemId):
-    try:
-        item = Item.objects.get(pk=itemId)
-        context = {
-            'title': f'{item.name} Details',
-            'item': item
-        }
-        return render(request, 'food/details.html', context)
-    except:
-        return render(request, 'food/404.html')
+# @login_required
+# def details(request, itemId):
+#     try:
+#         item = Item.objects.get(pk=itemId)
+#         context = {
+#             'title': f'{item.name} Details',
+#             'item': item
+#         }
+#         return render(request, 'food/details.html', context)
+#     except:
+#         return render(request, 'food/404.html')
 
 
 class FoodDetail(DetailView):
@@ -87,6 +89,19 @@ def updateItem(request, itemId):
         return render(request, 'food/update.html', context)
 
 
+class CreateItem(CreateView):
+    model = Item  # model which is to be created
+    # fields of item which is to be displayed in template
+    fields = ['name', 'description', 'price', 'image']
+    template_name = 'food/add2.html'
+
+    # referencing user which is logged in to created item
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+
+        return super().form_valid(form)
+
+
 @login_required
 def addItem(request):
     context = {
@@ -101,6 +116,7 @@ def addItem(request):
         image = request.POST['image']
 
         newItem = Item()
+        newItem.user = request.user
         newItem.name = name
         newItem.price = price
         newItem.description = description
@@ -108,7 +124,7 @@ def addItem(request):
 
         newItem.save()
 
-        return redirect('food:items')
+        return redirect('food:details', pk=newItem.pk)
     else:
         return render(request, 'food/add.html', context)
 
