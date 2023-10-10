@@ -4,11 +4,12 @@ from django.views.decorators.csrf import csrf_protect
 from django.http import JsonResponse
 from .models import Item
 from django.contrib.auth.decorators import login_required
+from django.views.generic.list import ListView
 from django.template import loader
 from .forms import ItemForm
-import traceback
 
 # Create your views here.
+
 
 @login_required
 def index(request):
@@ -17,18 +18,29 @@ def index(request):
     # return HttpResponse({"message":"Hello, There!"})
     return HttpResponse(template.render(context, request))
 
-@login_required
-def item(request):
-    itemList = Item.objects.all()
 
-    # template = loader.get_template('food/items.html')
+# function based view
+# @login_required
+# def item(request):
+#     itemList = Item.objects.all()
 
-    context = {
-        'title': 'Items',
-        'itemList' : itemList
-    }
+#     # template = loader.get_template('food/items.html')
 
-    return render(request, 'food/items.html', context)
+#     context = {
+#         'title': 'Items',
+#         'itemList': itemList
+#     }
+
+#     return render(request, 'food/items.html', context)
+
+
+# same above as class based view via ListView
+# @login_required
+class IndexClassView(ListView):
+    model = Item  # data model of which list based view is to be displayed
+    template_name = 'food/items.html'  # template name which to be rendered
+    context_object_name = 'itemList'  # context name for list of items
+
 
 @login_required
 def details(request, itemId):
@@ -36,7 +48,7 @@ def details(request, itemId):
         item = Item.objects.get(pk=itemId)
         context = {
             'title': f'{item.name} Details',
-            'item' : item
+            'item': item
         }
         return render(request, 'food/details.html', context)
     except:
@@ -57,7 +69,6 @@ def updateItem(request, itemId):
         description = request.POST['description']
         image = request.POST['image']
 
-
         item.name = name
         item.price = price
         item.description = description
@@ -72,10 +83,9 @@ def updateItem(request, itemId):
 @login_required
 def addItem(request):
     context = {
-        'title' : "Add Item",
-        'defaultUrl' : 'https://nayemdevs.com/wp-content/uploads/2020/03/default-product-image.png'
+        'title': "Add Item",
+        'defaultUrl': 'https://nayemdevs.com/wp-content/uploads/2020/03/default-product-image.png'
     }
-
 
     if request.method == 'POST':
         name = request.POST['name'].title()
@@ -95,13 +105,14 @@ def addItem(request):
     else:
         return render(request, 'food/add.html', context)
 
+
 @login_required
 def deleteItem(request, itemId):
     item = Item.objects.get(pk=itemId)
 
     context = {
-        'title' : f'Delete {item.name}',
-        'item' : item
+        'title': f'Delete {item.name}',
+        'item': item
     }
 
     if request.method == 'POST':
@@ -110,6 +121,7 @@ def deleteItem(request, itemId):
         return redirect('food:items')
 
     return render(request, 'food/delete.html', context)
+
 
 @login_required
 def add2(request):
@@ -121,8 +133,8 @@ def add2(request):
 
         return redirect('food:items')
 
-
     return render(request, 'food/form.html', {'form': form, 'buttonName': 'Save'})
+
 
 @login_required
 def update2(request, itemId):
@@ -135,7 +147,8 @@ def update2(request, itemId):
 
         return redirect('food:items')
 
-    return render(request, 'food/form.html', {'form':form, 'buttonName': 'Update'})
+    return render(request, 'food/form.html', {'form': form, 'buttonName': 'Update'})
+
 
 @login_required
 def delete(request, itemId):
@@ -146,6 +159,5 @@ def delete(request, itemId):
     if form.is_valid():
         item.delete()
         return redirect('food:items')
-
 
     return render(request, 'food/form.html', {'form': form, 'buttonName': 'Delete'})

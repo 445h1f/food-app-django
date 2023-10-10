@@ -15,12 +15,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from . import views
+from django.contrib.auth.decorators import login_required
 from django.urls import path
 
 app_name = 'food'
 
 urlpatterns = [
-    path('items/', views.item, name="items"),
+    # path('items/', views.item, name="items"),
+    path('items/', view=login_required(views.IndexClassView.as_view()), name='items'),
     path('items/detail/<int:itemId>', views.details, name="details"),
     path('items/update/<int:itemId>', views.updateItem, name="update"),
     path('items/add', views.addItem, name='add'),
